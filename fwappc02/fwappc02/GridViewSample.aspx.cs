@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace fwappc02
 {
@@ -18,6 +19,19 @@ namespace fwappc02
             Response.Redirect($"~/Basic/FormViewSample.aspx?EmployeeId={employeeId}");
 
 
+        }
+
+        protected void GridView1_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
+        {
+            // コマンド名確認
+            if (e.CommandName == "Custom")
+            {
+                // 行数を取得
+                int rowNum = int.Parse(e.CommandArgument.ToString());
+
+                // 行の背景色を変更
+                GridView1.Rows[rowNum].Cells[2].BackColor = Color.Red;
+            }
         }
     }
 }
