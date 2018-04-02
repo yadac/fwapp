@@ -9,6 +9,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
         </div>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4" DataKeyNames="EmployeeId" DataSourceID="SqlDataSource1" ForeColor="#333333" GridLines="None" AllowPaging="True" AllowSorting="True" OnRowCommand="GridView1_RowCommand" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
             <AlternatingRowStyle BackColor="White" />
@@ -33,7 +34,26 @@
                         <asp:Label ID="Label2" runat="server" Text='<%# Bind("Birthday", "{0:yyyy/MM/dd}") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField DataField="Sales" HeaderText="Sales" SortExpression="Sales" />
+                <asp:TemplateField HeaderText="売上" SortExpression="Sales">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("Sales") %>'></asp:TextBox>
+                        <asp:RequiredFieldValidator 
+                            ID="RequiredFieldValidator1" runat="server" 
+                            ErrorMessage="今期売上高を入力してください"
+                            ControlToValidate="TextBox1"
+                            ForeColor="Red">*</asp:RequiredFieldValidator>
+                        <asp:CompareValidator 
+                            ID="CompareValidator1" runat="server" 
+                            ErrorMessage="今期売上高には正の値を入力してください"
+                            ControlToValidate="TextBox1"
+                            Operator="GreaterThan"
+                            ValueToCompare="0"
+                            ForeColor="Red">*</asp:CompareValidator>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("Sales") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:BoundField DataField="TelNo" HeaderText="TelNo" SortExpression="TelNo" />
                 <asp:CheckBoxField DataField="Sex" HeaderText="Sex" SortExpression="Sex" />
                 <asp:HyperLinkField DataNavigateUrlFields="EmployeeId" DataNavigateUrlFormatString="~/Basic/FormViewSample.aspx?EmployeeId={0}" Text="詳細" />
