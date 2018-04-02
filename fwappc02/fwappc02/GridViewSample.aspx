@@ -15,7 +15,16 @@
             <Columns>
                 <asp:BoundField DataField="EmployeeId" HeaderText="社員番号" ReadOnly="True" SortExpression="EmployeeId" />
                 <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
-                <asp:BoundField DataField="DepartmentId" HeaderText="DepartmentId" SortExpression="DepartmentId" />
+                <asp:TemplateField HeaderText="課" SortExpression="DepartmentId">
+                    <EditItemTemplate>
+                        <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource2" DataTextField="Name" DataValueField="DepartmentId" SelectedValue='<%# Bind("DepartmentId") %>'>
+                        </asp:DropDownList>
+                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Departments]"></asp:SqlDataSource>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("DepartmentName") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:BoundField DataField="Birthday" HeaderText="Birthday" SortExpression="Birthday" DataFormatString="{0:yyyy/MM/dd}" />
                 <asp:BoundField DataField="Sales" HeaderText="Sales" SortExpression="Sales" />
                 <asp:BoundField DataField="TelNo" HeaderText="TelNo" SortExpression="TelNo" />
@@ -40,7 +49,7 @@
             ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
             DeleteCommand="DELETE FROM [Employees] WHERE [EmployeeId] = @EmployeeId"
             InsertCommand="INSERT INTO [Employees] ([EmployeeId], [Name], [DepartmentId], [Birthday], [Sales], [TelNo], [Sex]) VALUES (@EmployeeId, @Name, @DepartmentId, @Birthday, @Sales, @TelNo, @Sex)"
-            SelectCommand="SELECT * FROM [Employees]"
+            SelectCommand="SELECT emp.*, dep.Name as DepartmentName FROM [Employees] emp inner join Departments dep on emp.DepartmentId = dep.DepartmentId"
             UpdateCommand="UPDATE [Employees] SET [Name] = @Name, [DepartmentId] = @DepartmentId, [Birthday] = @Birthday, [Sales] = @Sales, [TelNo] = @TelNo, [Sex] = @Sex WHERE [EmployeeId] = @EmployeeId">
             <DeleteParameters>
                 <asp:Parameter Name="EmployeeId" Type="Int32" />
