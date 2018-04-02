@@ -55,7 +55,17 @@
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="TelNo" HeaderText="TelNo" SortExpression="TelNo" />
-                <asp:CheckBoxField DataField="Sex" HeaderText="Sex" SortExpression="Sex" />
+                <asp:TemplateField HeaderText="性別" SortExpression="Sex">
+                    <EditItemTemplate>
+                        <asp:RadioButtonList ID="RadioButtonList1" runat="server" SelectedValue='<%# Bind("Sex") %>'>
+                            <asp:ListItem Text="Men" Value="True"></asp:ListItem>
+                            <asp:ListItem Text="Women" Value="False"></asp:ListItem>                        
+                            </asp:RadioButtonList>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="SexLabel" runat="server" Text='<%# (bool)Eval("Sex")?"Men":"Women" %>' />
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:HyperLinkField DataNavigateUrlFields="EmployeeId" DataNavigateUrlFormatString="~/Basic/FormViewSample.aspx?EmployeeId={0}" Text="詳細" />
                 <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="True" />
                 <asp:ButtonField ButtonType="Button" CommandName="Custom" Text="カスタム" />
