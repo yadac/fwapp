@@ -25,7 +25,14 @@
                         <asp:Label ID="Label1" runat="server" Text='<%# Bind("DepartmentName") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField DataField="Birthday" HeaderText="Birthday" SortExpression="Birthday" DataFormatString="{0:yyyy/MM/dd}" />
+                <asp:TemplateField HeaderText="誕生日" SortExpression="Birthday">
+                    <EditItemTemplate>
+                        <asp:Calendar ID="Calendar1" runat="server" SelectedDate='<%# Bind("Birthday") %>' VisibleDate='<%# Bind("Birthday") %>'></asp:Calendar>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label2" runat="server" Text='<%# Bind("Birthday", "{0:yyyy/MM/dd}") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:BoundField DataField="Sales" HeaderText="Sales" SortExpression="Sales" />
                 <asp:BoundField DataField="TelNo" HeaderText="TelNo" SortExpression="TelNo" />
                 <asp:CheckBoxField DataField="Sex" HeaderText="Sex" SortExpression="Sex" />
